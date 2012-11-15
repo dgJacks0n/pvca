@@ -1,0 +1,96 @@
+%\VignetteIndexEntry{Batch effect estimation in Microarray data}
+%\VignetteDepends{pvca, golubEsets}
+%\VignettePackage{pvca}
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+%\usepackage[authoryear, round]{natbib}
+\textwidth=6.2in
+\textheight=8.5in
+\parskip=.3cm
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+\newcommand\Rpackage[1]{{\textsf{#1}\index{#1 (package)}}}
+\newcommand\dataset[1]{{\textit{#1}\index{#1 (data set)}}}
+\newcommand\Rclass[1]{{\textit{#1}\index{#1 (class)}}}
+\newcommand\Rfunction[1]{{{\small\texttt{#1}}\index{#1 (function)}}}
+\newcommand\Rfunarg[1]{{\small\texttt{#1}}}
+\newcommand\Robject[1]{{\small\texttt{#1}}}
+
+\author{Pierre R. Bushel, Jianying Li}
+
+\begin{document}
+\title{Estimating batch effect in Microarray data with Principal Variance Component Analysis(PVCA) method}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+
+
+Often times "batch effects" are present in microarray data due to any number of factors, including e.g. a poor experimental design or when the gene expression data is combined from different studies with limited standardization. To estimate the variability of experimental effects including batch, a novel hybrid approach known as principal variance component analysis (PVCA) has been developed. The approach leverages the strengths of two very popular data analysis methods: first, principal component analysis (PCA) is used to efficiently reduce data dimension with maintaining the majority of the variability in the data, and variance components analysis (VCA) fits a mixed linear model using factors of interest as random effects to estimate and partition the total variability. The PVCA approach can be used as a screening tool to determine which sources of variability (biological, technical or other) are most prominent in a given microarray data set. Using the eigenvalues associated with their corresponding eigenvectors as weights, associated variations of all factors are standardized and the magnitude of each source of variability (including each batch effect) is presented as a proportion of total variance. Although PVCA is a generic approach for quantifying the corresponding proportion of variation of each effect, it can be a handy assessment for estimating batch effect before and after batch normalization. 
+
+The \Rpackage{pvca} package implements the method described in the book Batch Effects and Noise in Microarray Experiment, chapter 12 "Principal Variance Components Analysis: Estimating Batch Effects in Microarray Gene Expression Data": \emph{Jianying Li, Pierre R Bushel, Tzu-Ming Chu, and Russell D Wolfinger 2010}
+
+The \Rpackage{pvca} method was applied in the paper: \emph{Michael J Boedigheimer, Russell D Wolfinger, Michael B Bass, Pierre R Bushel, Jeff W Chou, Matthew Cooper, J Christopher Corton, Jennifer Fostel, Susan Hester, Janice S Lee, Fenglong Liu, Jie Liu, Hui-Rong Qian, John Quackenbush, Syril Pettit and Karol L Thompson11  2008
+``Sources of variation in baseline gene expression levels from toxicogenomics study control animals across multiple laboratories'' BMC Genomics 2008, June 12, 9:285}
+
+
+
+\section{Installation}
+Simply skip this section if one has been familiar with the usual Bioconductor installation process. Assume that a recent version of R has been correctly installed.
+
+Install the packages from the Bioconductor repository, using the \verb'biocLite' utility. Within R console, type
+<<install, echo=TRUE, eval=FALSE>>=
+  source("http://bioconductor.org/biocLite.R")
+  biocLite("pvca")
+@
+
+Installation using the \verb'biocLite' utility automatically handles the package dependencies. The \verb'pvca' package
+depends on the packages like \verb'lme4' etc., which can be installed when \verb'pvca' package is stalled.
+
+
+\section{An example run on published Golub data}
+
+We use \verb'Golub' dataset in the package \verb'golubEsets' as an example to illustrate the PVCA batch effect estimation procedure. This dataset contains 7129 genes from Microarray data on 72 samples from a leukemia study. It is a merged dataset and we are testing variability from each factor and their two-ways interactions. The pacakge performs PVCA on this merged data and produces an estimation of the proportion (as possible batch effect) each factor and interaction contribute. The figure shows the proportion in a bar chart. .
+<<example,echo=T,eval=TRUE>>=
+library(golubEsets)
+library(pvca)
+
+data(Golub_Merge)
+pct_threshold <- 0.6
+batch.factors <- c("ALL.AML", "BM.PB", "Source")
+
+pvcaObj <- pvcaBatchAssess (Golub_Merge, batch.factors, pct_threshold) 
+
+@
+
+
+We can plot the source of potential batch effect in proporting as shown in Figure 1.
+<<plot,echo=T,eval=FALSE>>=
+bp <- barplot(pvcaObj$dat,  xlab = "Effects", 
+	ylab = "Weighted average proportion variance", 
+	ylim= c(0,1.1),col = c("blue"), las=2, 
+	main="PVCA estimation bar chart")
+axis(1, at = bp, labels = pvcaObj$label, xlab = "Effects", cex.axis = 0.5, las=2)
+values = pvcaObj$dat
+new_values = round(values , 3)
+text(bp,pvcaObj$dat,labels = new_values, pos=3, cex = 0.8) 
+
+@
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=12cm,type=pdf,ext=.pdf,read=.pdf]{pvcaEstimate}
+\caption{The bar chart shows the proportion of batch effect from possible source.}
+\end{center}
+\end{figure}
+
+\section{Session}
+<<<>>=
+  print(sessionInfo())
+@
+
+
+
+\end{document}

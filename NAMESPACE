@@ -1,0 +1,7 @@
+#There was a very weird error when invoking "summary" function. Thanks to Dr. Les Klimczak who helped to figure it out.
+importFrom(Matrix, summary)
+importFrom(vsn, vsn2)
+importFrom(Biobase, pData, exprs)
+
+##export everything that does not start with a .
+exportPattern("^[^\\.]")

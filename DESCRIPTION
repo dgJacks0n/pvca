@@ -1,0 +1,14 @@
+Package: pvca
+Type: Package
+Title: Principal Variance Component Analysis (PVCA)
+Version: 0.99.1
+Date: 2012-09-11
+Author: Pierre Bushel <bushel@niehs.nih.gov>
+Maintainer: Jianying LI <li11@niehs.nih.gov>
+Description: This package contains the function to assess the batch sourcs by fitting all "sources" as random effects including two-way interaction terms in the Mixed Model(depends on lme4 package) to selected principal components, which were obtained from the original data correlation matrix. This package accompanies the book "Batch Effects and Noise in Microarray Experiements, chapter 12.
+Depends: R (>= 2.13.0), lme4
+Imports: Matrix, Biobase, vsn
+Suggests: golubEsets
+biocViews: Bioinformatics, Microarray, BatchEffectAssessment
+License: LGPL (>= 2.0)
+LazyLoad: yes
