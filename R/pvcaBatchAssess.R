@@ -34,7 +34,7 @@ function (abatch, batch.factors, threshold)
 	my_sum_2 = 1
 	for (i in ev_n:1){
 		my_sum_2  = my_sum_2 - percents_PCs[i]
-		if ((my_sum_2) <= pct_threshold ){
+		if ((my_sum_2) <= threshold ){
 			my_counter_2 = my_counter_2 + 1
 		}
 
