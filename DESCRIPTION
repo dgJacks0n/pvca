@@ -1,7 +1,7 @@
 Package: pvca
 Type: Package
 Title: Principal Variance Component Analysis (PVCA)
-Version: 0.99.1
+Version: 0.99.2
 Date: 2012-09-11
 Author: Pierre Bushel <bushel@niehs.nih.gov>
 Maintainer: Jianying LI <li11@niehs.nih.gov>
