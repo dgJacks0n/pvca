@@ -109,12 +109,13 @@ function (abatch, batch.factors, threshold)
 	for (i in 1:pc_n){
 		y = (((i-1)*expDesignRowN)+1)
 		funct <- paste ("pc_data_matrix", function.mods, sep =" ~ ")
-		randomEffects <- (summary(Rm1ML <- lmer( funct , Data[y:(((i-1)*expDesignRowN)+expDesignRowN),], REML = TRUE, verbose = FALSE, na.action = na.omit))@REmat)
-		for (j in 1:effects_n){
-			randomEffectsMatrix[i,j] = as.numeric(randomEffects[j,3])
-		}
+                Rm1ML <- lmer( funct ,
+                              Data[y:(((i-1)*expDesignRowN)+expDesignRowN),],
+                              REML = TRUE, verbose = FALSE, na.action = na.omit)
+                randomEffects <- Rm1ML
+                randomEffectsMatrix[i,] <- c(unlist(VarCorr(Rm1ML)),resid=sigma(Rm1ML)^2)
 	}
-	effectsNames <- randomEffects[,1]
+	effectsNames <- c(names(getME(Rm1ML,"cnms")),"resid")
 
 	########## Standardize Variance ##########
 	randomEffectsMatrixStdze <- matrix(data = 0, nrow = pc_n, ncol = effects_n)

@@ -2,6 +2,7 @@
 importFrom(Matrix, summary)
 importFrom(vsn, vsn2)
 importFrom(Biobase, pData, exprs)
+importFrom(lme4,lmer,VarCorr,sigma,getME)
 
 ##export everything that does not start with a .
 exportPattern("^[^\\.]")

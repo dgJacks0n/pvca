@@ -23,9 +23,6 @@ Often times "batch effects" are present in microarray data due to any number of 
   \item{dat }{A numerica vector contains the percentile of sources of batch effect for each term}
   \item{label }{A character vector containing the name for each term for plot label purpose}
 }
-\references{
-
-}
 \author{
 Pierre Bushel
 }
@@ -40,7 +37,9 @@ pct_threshold <- 0.6
 batch.factors <- c("ALL.AML", "BM.PB", "Source")
 
 pvcaObj <- pvcaBatchAssess (Golub_Merge, batch.factors, pct_threshold) 
-bp <- barplot(pvcaObj$dat,  xlab = "Effects", ylab = "Weighted average proportion variance", ylim= c(0,1.1),col = c("blue"), las=2, main="PVCA estimation bar chart")
+bp <- barplot(pvcaObj$dat,  xlab = "Effects",
+       ylab = "Weighted average proportion variance", ylim= c(0,1.1),
+       col = c("blue"), las=2, main="PVCA estimation bar chart")
 axis(1, at = bp, labels = pvcaObj$label, xlab = "Effects", cex.axis = 0.5, las=2)
 values = pvcaObj$dat
 new_values = round(values , 3)
