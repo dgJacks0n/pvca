@@ -1,7 +1,7 @@
 Package: pvca
 Type: Package
 Title: Principal Variance Component Analysis (PVCA)
-Version: 1.11.0
+Version: 1.11.1
 Date: 2013-09-25
 Author: Pierre Bushel <bushel@niehs.nih.gov>
 Maintainer: Jianying LI <li11@niehs.nih.gov>
@@ -13,7 +13,7 @@ Description: This package contains the function to assess the batch
         accompanies the book "Batch Effects and Noise in Microarray
         Experiements, chapter 12.
 Depends: R (>= 2.15.1)
-Imports: Matrix, Biobase, vsn, lme4
+Imports: Matrix, Biobase, vsn, stats, lme4
 Suggests: golubEsets
 License: LGPL (>= 2.0)
 LazyLoad: yes
