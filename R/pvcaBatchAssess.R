@@ -1,5 +1,5 @@
 pvcaBatchAssess <-
-function (abatch, batch.factors, threshold)
+function (abatch, batch.factors, threshold, include.interactions = TRUE)
 {
 	theDataMatrix <- exprs(vsn2(abatch, verbose=FALSE))
 	dataRowN <- nrow(theDataMatrix)
@@ -88,18 +88,24 @@ function (abatch, batch.factors, threshold)
 		model.func[index] = mod
 		index = index + 1
 	}
-
-	##	two-way interaction
-	for (i in 1:(length(variables)-1))
-	{	
-		for (j in (i+1):length(variables))
-		{
-			mod = paste("(1|", variables[i], ":", variables[j], ")",   sep="")
-			model.func[index] = mod
-			index = index + 1
-		}
+  
+	# modification: make 2 way interactions optional
+	# in an effort to analyze more factors in a reasonable amount
+	# of time
+	# D Jackson
+	if(include.interactions) {
+	  ##	two-way interaction
+	  for (i in 1:(length(variables)-1))
+	  {	
+	    for (j in (i+1):length(variables))
+	    {
+	      mod = paste("(1|", variables[i], ":", variables[j], ")",   sep="")
+	      model.func[index] = mod
+	      index = index + 1
+	    }
+	  }
 	}
-
+	
 	function.mods <- paste (model.func , collapse = " + ")
 
 	##============================#
@@ -113,7 +119,7 @@ function (abatch, batch.factors, threshold)
                               Data[y:(((i-1)*expDesignRowN)+expDesignRowN),],
                               REML = TRUE, verbose = FALSE, na.action = na.omit)
                 randomEffects <- Rm1ML
-                randomEffectsMatrix[i,] <- c(unlist(VarCorr(Rm1ML)),resid=sigma(Rm1ML)^2)
+                randomEffectsMatrix[i,] <- c(unlist(VarCorr(Rm1ML)), resid = sigma(Rm1ML)^2)
 	}
 	effectsNames <- c(names(getME(Rm1ML,"cnms")),"resid")
 
