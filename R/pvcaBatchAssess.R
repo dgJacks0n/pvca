@@ -72,8 +72,6 @@ function (abatch, batch.factors, threshold, include.interactions = TRUE)
 
 	########## Mixed linear model ##########
 	op <- options(warn = (-1)) 
-	effects_n = expDesignColN  + choose(expDesignColN, 2) + 1
-	randomEffectsMatrix <- matrix(data = 0, nrow = pc_n, ncol = effects_n)
 
 	##============================#
 	##	Get model functions
@@ -107,11 +105,22 @@ function (abatch, batch.factors, threshold, include.interactions = TRUE)
 	}
 	
 	function.mods <- paste (model.func , collapse = " + ")
+	
+	# browser()
 
 	##============================#
 	##	Get random effects	#
 	##============================#
-
+  # Original
+	# effects_n = expDesignColN  + choose(expDesignColN, 2) + 1
+	effects_n = expDesignColN + 1
+	
+	if(include.interactions) {
+	  effects_n <- effects_n + choose(expDesignColN, 2)
+	}
+	
+	randomEffectsMatrix <- matrix(data = 0, nrow = pc_n, ncol = effects_n)
+	
 	for (i in 1:pc_n){
 		y = (((i-1)*expDesignRowN)+1)
 		funct <- paste ("pc_data_matrix", function.mods, sep =" ~ ")
