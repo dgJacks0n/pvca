@@ -40,10 +40,10 @@ elapsed_noi <- Sys.time() - start_noi
 bp_noi <- barplot(pvcaObj_noi$dat,  xlab = "Effects",
               ylab = "Weighted average proportion variance", ylim= c(0,1.1),
               col = c("blue"), las=2, main="PVCA bar chart w/o Interactions")
-axis(1, at = bp, labels = pvcaObj$label, xlab = "Effects", cex.axis = 0.5, las=2)
-values = pvcaObj$dat
+axis(1, at = bp_noi, labels = pvcaObj_noi$label, xlab = "Effects", cex.axis = 0.5, las=2)
+values = pvcaObj_noi$dat
 new_values = round(values , 3)
-text(bp,pvcaObj$dat,labels = new_values, pos=3, cex = 0.8) 
+text(bp_noi, pvcaObj_noi$dat, labels = new_values, pos=3, cex = 0.8) 
 
 message("PVCA without interactions took ", elapsed_noi)
 
