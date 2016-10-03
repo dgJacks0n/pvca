@@ -1,8 +1,8 @@
-Package: pvca
+Package: pvcaMod
 Type: Package
 Title: Principal Variance Component Analysis (PVCA)
-Version: 1.13.0-1
-Date: 2013-09-25
+Version: 1.13.1
+Date: 2016-10-03
 Author: Pierre Bushel <bushel@niehs.nih.gov>
 Maintainer: Jianying LI <li11@niehs.nih.gov>
 Description: This package contains the function to assess the batch
@@ -18,5 +18,5 @@ Imports: Matrix, Biobase, vsn, stats, lme4
 Suggests: golubEsets
 License: LGPL (>= 2.0)
 LazyLoad: yes
-Packaged: 2013-09-25 18:27:06 UTC; bolker
+Repository: biogit (http://biogit.pri.bms.com/jacksod/pvca_mod)
 biocViews: Microarray, BatchEffect
