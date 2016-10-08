@@ -3,6 +3,8 @@
 \title{Principal Variance Component Analysis (PVCA)}
 \description{
 This package contains the function to assess the batch sources by fitting all "sources" as random effects including two-way interaction terms in the Mixed Model(depends on lme4 package) to selected principal components, which were obtained from the original data correlation matrix. This package accompanies the book "Batch Effects and Noise in Microarray Experiements, chapter 12.
+
+Note: this code has been modified to allow bypassing the 2-way interactions by setting include.interactions to FALSE.
 }
 \usage{
 pvcaBatchAssess(abatch, batch.factors, threshold, include.interactions = TRUE)
