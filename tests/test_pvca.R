@@ -2,17 +2,10 @@
 # copied verbatim from example in pvca-batch man page
 
 library(golubEsets)
-library(pvca) # original boioconductor package
 library(pvcaMod) # my mod for regression testing
 data(Golub_Merge)
 pct_threshold <- 0.6
 batch.factors <- c("ALL.AML", "BM.PB", "Source")
-
-
-message("Testing PVCA with ", length(batch.factors), " factors")
-
-# first: run original package
-orig_result <- pvca::pvcaBatchAssess(Golub_Merge, batch.factors, pct_threshold)
 
 
 
@@ -47,11 +40,3 @@ text(bp_noi, pvcaObj_noi$dat, labels = new_values, pos=3, cex = 0.8)
 
 message("PVCA without interactions took ", elapsed_noi)
 
-# regression test: modified code (with interactions) vs original
-mod_v_orig <- abs(orig_result$dat - pvcaObj$dat)
-
-# define a 'tolerance'
-tol <- 1e-9
-if( any(mod_v_orig > tol) ){
-  stop("Modified results differ from original by more than ", tol)
-}
